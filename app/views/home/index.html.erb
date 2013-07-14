@@ -1,0 +1,217 @@
+<h1>Algorithms Are Cool!</h1>
+<h2>Seriously</h2>
+
+You don't need to be good at math. You don't need to know how to code.
+
+<button>Prove it.</button>
+
+Suppose you had an ordered array of 100 integers, and you wanted to know whether or not a certain integer was in the array.
+
+<!-- idea: set of 100 doorbells, and you can't remember which apartment number your friend ned lives in-->
+
+=========graphic=============
+needle:
+20
+
+haystack:
+[3, 5, 10, 35, 71, 100]
+
+Is that freaking needle in that freaking haystack?
+
+(NOTE: gray out the numbers we haven't visited yet)
+=============================
+
+
+How would you do it?
+
+You could walk through the array from the beginning, checking to see whether or not you hit the number.
+
+code:
+-----------------------------------
+function bruteforce(haystack, needle){
+    for(i = 0; i <= haystack.length; i++){
+        if(haystack[i] == needle){
+            return true;
+        }
+    }
+    return false;
+}
+-----------------------------------
+
+If the needle is not in the haystack, we will check every element in the haystack.
+
+The total amount of steps our algorithm takes is proportional to ("on the order of") the size of the haystack. We call this "O(n)" ("pronounced 'o' of 'n'"), where 'n' is the length of the haystack.
+
+We can do better. Because we know the array is ordered, we know that if we hit a number larger than the needle, the needle is not in the haystack.
+
+=========graphic=============
+needle:
+20
+
+haystack:
+[3, 5, 10, 35, 71, 100]
+            ^
+ .  .   .   i
+35 < 20, so we know 20 isn't in here.
+Pack it up boys, we're going home.
+=============================
+
+This is strictly faster than our first algorithm. But it's still lame. SO LAME.
+
+Here's why: if the needle is the last item in the haystack, we /still/ have to walk through the whole freaking array. So in this "worst case," our algorithm is still O(n)
+
+"But like, if the needle is at the end /of course/ you'll have to look at everything in the haystack"
+
+WRONG!
+
+"Oh, so you mean like we should start from the end?"
+
+NO! If you start from the end, then your algorithm is /still/ O(n) if the needle is at the /beginning/ of the haystack.
+
+"Ok so what like you start in the middle?"
+
+That's crazy! But yes.
+
+Let's start with i pointing to the middle index of the array:
+=========graphic=============
+needle:
+20
+
+haystack:
+[3, 5, 10, 35, 71, 100]
+            ^
+            i
+I have no idea what I am doing
+=============================
+
+Check it out: we're looking at 35, and our needle is 20. We don't know if 20 is in the set or not, but we know that everything to the right of i is greater than 35, which means it's also greater than 20, which means if 20 IS in the set, it's definitely to the left.
+
+And just like that, we chopped off HALF of our haystack. We don't ever have to look at it. It's dead to us. Please, just don't even bring it up.
+
+=========graphic=============
+needle:
+20
+
+haystack:
+[3, 5, 10, 35, X, X, X] 
+            ^
+            i
+Sayonara, suckers!
+=============================
+
+And if the item at i had been LESS THAN 20, the converse would hold--if 20 is in the set, it's certainly to the right of i. The left side of the set is dead to us.
+
+HERE'S WHERE IT GETS CRAZY
+
+Now that we've dumped half of our set, we're left with a /subproblem/ that is actually /the same/ as our initial problem, only smaller. SO LET'S USE THE SAME EXACT APPROACH AGAIN.
+
+=========graphic=============
+needle:
+20
+
+haystack:
+[3, 5, 7, 10, 35, X, X, X, X] 
+       ^     
+       i    
+Again! Again!
+=============================
+
+Now i is pointing to a 7, so we know 20 is to the right, if it's there at all.
+
+=========graphic=============
+needle:
+20
+
+haystack:
+[X, X, X, 10, X, X, X, X, X] 
+       ^     
+       i    
+=============================
+
+BINGO! Well, we didn't find our needle. But we can confidently say that it is not in the haystack. And we only had to check 3 slots.
+
+This approach is clearly more efficient. But how much more efficient?
+
+So, if our haystack is some arbitrary size n, how many elements will we have to check in the worst case (the case where the needle is not in the haystack)?
+
+Think of it this way: the final subproblem is just 1 element. The subproblem before that is twice as big (2), the one before that is twice as big as that (4), etc. So the question is, how many times do you have to multiply 1 by 2 to get to n?
+
+1 * 2^x = n
+
+We can ditch the 1, (algebra!), and we can take the log_2 of both sides (scared of logs?).
+
+-------------------------
+
+Logs are pretty simple
+
+log_2(8) simply means "what power must you raise 2 to in order to get 8?", or 2^? = 8
+
+Logs are useful for bringing variables in exponents back down to dry land.
+
+2^x = 8
+we can take the log_2 of both sides
+log_2(2^x) = log_2(8)
+"the power that you raise 2 to to get 2^x"--well, that's just x!
+x = log_2(8)
+x = 3
+
+-------------------------
+
+So now we have log_2(2^x) = log_2(n)
+Which is just x = log_2(n)
+
+So that's our answer. We have to check at most log_2(n) elements in an ordered haystack of n elements before we can confirm that the needle is not in the haystack.
+
+This may not be obvious, but as our haystack gets large, log_2(n) quickly becomes much smaller than n, or 1/2n, or even 1/4n.
+
+n 1/2n 1/4n log_2(n)
+5 2.5  1.25 2.321928
+10 5 2.5 3.321928
+20 10 5 4.321928
+100 50 25 6.643856
+1000 500 250 9.965784
+
+Are you getting this? If our ordered haystack is 1000 elements, we have to check at most 10 elements to find a needle in it. In the first algorithm we thought of, we would have had to check all 1000 in the worst case. So lame.
+
+
+
+
+
+
+
+
+
+
+
+Our final set is only 1 element, the set before that was twice as big, and the set before that was twice as big, etc.
+
+
+So, the question is: how many times must we multiply 1 by 2 in order to get n? Or:
+1 * 2^x = n
+
+
+
+
+
+
+
+
+
+
+
+graveyard::::::::::::::::::::::::::::::::::
+
+Well, each time we're dividing our set of n elements in half, until we get to 1 element. So, how many times must we divide n in half to get to 1? In other words, n * (.5)^x = 1
+
+This question is equivalent to "how many times must we multiply 1 by 2 until we get n?" Or, 2^x = n.
+
+(Don't believe me? Check the math, yo.)
+
+
+
+n * ((.5) * x) = 1
+.5nx = 1
+x = 2/n
+
+2/n = lgn
+
