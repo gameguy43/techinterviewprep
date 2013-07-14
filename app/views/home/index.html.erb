@@ -1,13 +1,138 @@
-<h1>Algorithms Are Cool!</h1>
-<h2>Seriously</h2>
 
-You don't need to be good at math. You don't need to know how to code.
+<!DOCTYPE html>
+<html>
+<head>
 
-<button>Prove it.</button>
+<title>
+Algorithms are cool!
+</title>
 
-Suppose you had an ordered array of 100 integers, and you wanted to know whether or not a certain integer was in the array.
+<style type="text/css">
+.jumbotron{
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #eee;
+    height: 500px;
+    position: relative;
+}
+
+.jumbotron .header{
+    text-align: center;
+}
+
+.illustration{
+    /*
+    text-align: center;
+    border: 1px solid red;
+    padding: 20px;
+    */
+}
+
+table.array tr{
+    padding: 0;
+    margin: 0;
+}
+table.array tr td{
+    border: 1px solid #dcdcdc;
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    text-align: center;
+}
+
+table.array tr td .index{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    font-size: 10px;
+    line-height: 10px;
+}
+
+.footnote{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: #696969;
+    font-size: 15px;
+}
+
+.vocab{
+    font-weight: bold;
+}
+
+</style>
+
+
+</head>
+<body>
+
+
+<div class="jumbotron header">
+    <h1>Algorithms Are Cool!</h1>
+    <h2>
+        You don't need to be good at math. You don't even need to know how to code.
+    </h2>
+    <div class="footnote">
+        I'll teach you <span class="vocab">Binary Search</span>, a <em>brain-meltingly neat</em> search algorithm.
+    </div>
+    <a class="btn btn-success btn-large">Prove it.</a>
+</div>
+
+<div class="jumbotron">
+    <p>
+        Suppose you had an <span class="vocab"><a href="#" rel="tooltip" data-toggle="hover" data-trigger="hover" title="An ordered list of things, where you can get the nth item instantly">array</a></span> of 100 numbers, and you wanted to know whether or not a certain number was in the array.
+    </p>
+
+    <div class="illustration">
+        <table class="array">
+            <tr>
+                <td>
+                    <span class="index">
+                        1
+                    </span>
+                    3
+                </td>
+                <td>
+                    <span class="index">
+                        2
+                    </span>
+                    5
+                </td>
+                <td>
+                    <span class="index">
+                        3
+                    </span>
+                    10
+                </td>
+                <td>
+                    <span class="index">
+                        4
+                    </span>
+                    35
+                </td>
+                <td>
+                    <span class="index">
+                        5
+                    </span>
+                    71
+                </td>
+                <td>
+                    <span class="index">
+                        n
+                    </span>
+                   . . . 
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+
 
 <!-- idea: set of 100 doorbells, and you can't remember which apartment number your friend ned lives in-->
+<!-- nah, will take too long to explain, i think -->
 
 =========graphic=============
 needle:
@@ -26,6 +151,7 @@ How would you do it?
 
 You could walk through the array from the beginning, checking to see whether or not you hit the number.
 
+<!--
 code:
 -----------------------------------
 function bruteforce(haystack, needle){
@@ -37,6 +163,9 @@ function bruteforce(haystack, needle){
     return false;
 }
 -----------------------------------
+show code /optionally/--people can click a link that says "code example"
+(eventually--show this in like 5 languages)
+-->
 
 If the needle is not in the haystack, we will check every element in the haystack.
 
@@ -215,3 +344,4 @@ x = 2/n
 
 2/n = lgn
 
+</body>
