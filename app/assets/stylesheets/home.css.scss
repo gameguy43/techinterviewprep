@@ -1,3 +1,87 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.jumbotron{
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #eee;
+    height: 500px;
+    position: relative;
+    color: #707070;
+
+    .header{
+        text-align: center;
+    }
+
+    p{
+        font-size: 30px;
+        color: #555;
+    }
+
+
+    .footnote{
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        color: #696969;
+        font-size: 15px;
+    }
+
+    .vocab{
+        //font-weight: bold;
+        border-bottom: 1px dashed #a9a9a9;
+        color: #000;
+        cursor: pointer;
+        &:hover{
+            color: inherit;
+            text-decoration: none;
+        }
+    }
+
+    .illustration{
+        text-align: left;
+        padding: 20px 80px;
+        label{
+            font-size: 16px;
+            font-weight: normal;
+            margin: 0;
+            padding: 0;
+        }
+
+        .caption{
+            font-style: italic;
+            padding: 5px 20px;
+            margin: 10px;
+            background-color: #f5f5f5;
+        }
+
+        table{
+            margin: 0;
+            &.array tr{
+                padding: 0;
+                margin: 0;
+                td .index{
+                    position: absolute;
+                    top: 0px;
+                    left: 0px;
+                    font-size: 10px;
+                    line-height: 10px;
+                }
+            }
+        }
+
+        table.array tr td, .box{
+            border: 1px solid #dcdcdc;
+            width: 50px;
+            height: 50px;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            text-align: center;
+        }
+
+    }
+
+}
+
+
