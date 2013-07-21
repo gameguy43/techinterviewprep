@@ -31,7 +31,7 @@ $(function(){
 
 <div class="jumbotron">
     <p>
-        Suppose you had an <a class="vocab" data-toggle="tooltip" title="An ordered list of things, where you can get the nth item instantly">array</a> of 1,000 numbers.
+        Suppose you had an <a class="vocab" data-toggle="tooltip" title="An ordered list of things, where you can get the nth item instantly">array</a> of 1,000 numbers, in sorted order.
     </p>
     <p>
         How would you check if a certain number is in the array?
@@ -112,7 +112,7 @@ Is that freaking needle in that freaking haystack?
 <div class="jumbotron">
 
 <p>
-You could walk through the array from the beginning, checking to see whether or not you hit the number.
+You could walk through the array from the beginning, checking for the needle as you go.
 </p>
 
     <div class="illustration">
@@ -121,32 +121,29 @@ You could walk through the array from the beginning, checking to see whether or 
         <label for="fig1-haystack">Haystack:</label>
         <table class="array" id="fig1-haystack">
             <tr>
-                <td>
+                <td class="visited eliminated">
                     <span class="index">
                         1
                     </span>
                     3
                 </td>
-                <td>
+                <td class="visited eliminated">
                     <span class="index">
                         2
                     </span>
                     5
                 </td>
-                <td>
+                <td class="visited eliminated">
                     <span class="index">
                         3
                     </span>
                     10
                 </td>
-                <td>
+                <td class="current">
                     <span class="index">
                         4
                     </span>
                     35
-                    <div class="label">
-                        Nope.
-                    </div>
                 </td>
                 <td>
                     <span class="index">
@@ -154,16 +151,18 @@ You could walk through the array from the beginning, checking to see whether or 
                     </span>
                     71
                 </td>
+                <td class="snip">
+                </td>
                 <td>
                     <span class="index">
-                        n
+                        1,000
                     </span>
-                   . . . 
+                    941
                 </td>
             </tr>
         </table>
         <div class="caption">
-            Is the needle in the haystack?
+            Are we there yet?
         </div>
     </div>
 
@@ -185,12 +184,124 @@ show code /optionally/--people can click a link that says "code example"
 (eventually--show this in like 5 languages)
 -->
 
-If the needle is not in the haystack, we will check every element in the haystack.
+<div class="jumbotron">
 
+<p>
+In the worst case the needle is not in the haystack, so we will check every element in the haystack.
+</p>
+
+
+<!--
+<p>
 The total amount of steps our algorithm takes is proportional to ("on the order of") the size of the haystack. We call this "O(n)" ("pronounced 'o' of 'n'"), where 'n' is the length of the haystack.
+</p>
+-->
 
-We can do better. Because we know the array is ordered, we know that if we hit a number larger than the needle, the needle is not in the haystack.
+    <div class="illustration">
+        <label for="fig1-needle">Needle:</label>
+        <div id="fig1--needle" class="box">372</div>
+        <label for="fig1-haystack">Haystack:</label>
+        <table class="array" id="fig1-haystack">
+            <tr>
+                <td class="snip">
+                </td>
+                <td class="visited eliminated">
+                    <span class="index">
+                        663
+                    </span>
+                    715
+                </td>
+                <td class="visited eliminated">
+                    <span class="index">
+                        664
+                    </span>
+                    724
+                </td>
+                <td class="visited eliminated">
+                    <span class="index">
+                        665
+                    </span>
+                    753
+                </td>
+                <td class="current">
+                    <span class="index">
+                        666
+                    </span>
+                    789
+                </td>
+                <td>
+                    <span class="index">
+                        667
+                    </span>
+                    789
+                </td>
+                <td class="snip">
+                </td>
+            </tr>
+        </table>
+        <div class="caption">
+            I want to die.
+        </div>
+    </div>
 
+</div>
+
+<div class="jumbotron">
+
+    <p>
+        Of course, we can give up early if we hit a number greater than the needle...
+    </p>
+
+    <div class="illustration">
+        <label for="fig1-needle">Needle:</label>
+        <div id="fig1--needle" class="box">372</div>
+        <label for="fig1-haystack">Haystack:</label>
+        <table class="array" id="fig1-haystack">
+            <tr>
+                <td class="snip">
+                </td>
+                <td class="visited eliminated">
+                    <span class="index">
+                        54
+                    </span>
+                    315
+                </td>
+                <td class="visited eliminated">
+                    <span class="index">
+                        55
+                    </span>
+                    333
+                </td>
+                <td class="visited eliminated">
+                    <span class="index">
+                        56
+                    </span>
+                    354
+                </td>
+                <td class="current">
+                    <span class="index">
+                        57
+                    </span>
+                    380
+                </td>
+                <td>
+                    <span class="index">
+                        58
+                    </span>
+                    384
+                </td>
+                <td class="snip">
+                </td>
+            </tr>
+        </table>
+        <div class="caption">
+            380 > 372. Our work here is done.
+        </div>
+    </div>
+
+</div>
+
+<!--
 =========graphic=============
 needle:
 20
@@ -202,80 +313,495 @@ haystack:
 35 < 20, so we know 20 isn't in here.
 Pack it up boys, we're going home.
 =============================
+-->
 
+<div class="jumbotron">
+    <p>
+        But what if <em>everything</em> in the haystack is less than the needle?
+    </p>
+    <p>
+        Then we're still stuck looking at every element.
+    </p>
+
+    <div class="illustration">
+        <label for="fig1-needle">Needle:</label>
+        <div id="fig1--needle" class="box">372</div>
+        <label for="fig1-haystack">Haystack:</label>
+        <table class="array" id="fig1-haystack">
+            <tr>
+                <td class="snip">
+                </td>
+                <td class="visited eliminated">
+                    <span class="index">
+                        996
+                    </span>
+                    315
+                </td>
+                <td class="visited eliminated">
+                    <span class="index">
+                        997
+                    </span>
+                    333
+                </td>
+                <td class="visited eliminated">
+                    <span class="index">
+                        998
+                    </span>
+                    354
+                </td>
+                <td class="visited eliminated">
+                    <span class="index">
+                        999
+                    </span>
+                    359
+                </td>
+                <td class="current">
+                    <span class="index">
+                        1,000
+                    </span>
+                    360
+                </td>
+            </tr>
+        </table>
+        <div class="caption">
+            Seriously?
+        </div>
+    </div>
+
+</div>
+
+<!--
 This is strictly faster than our first algorithm. But it's still lame. SO LAME.
 
 Here's why: if the needle is the last item in the haystack, we /still/ have to walk through the whole freaking array. So in this "worst case," our algorithm is still O(n)
 
 "But like, if the needle is at the end /of course/ you'll have to look at everything in the haystack"
+-->
 
-WRONG!
+<div class="jumbotron">
+<!--
+<p class="you-say">
+    "That's ridiculous! In 1,000 numbers you don't have any greater than 372?"
+</p>
+-->
 
-"Oh, so you mean like we should start from the end?"
+<p>
+    In computer science, you often focus on the "worst case" in an analysis like this. Assume that there is an evil hacker demon that knows your algorithm and gives you input data that will try to break it.
+</p>
 
-NO! If you start from the end, then your algorithm is /still/ O(n) if the needle is at the /beginning/ of the haystack.
+<p>
+    How do we avoid looking at every single element, even with the evil hacker demon?
+</p>
 
-"Ok so what like you start in the middle?"
+<!--
+<div class="illustration">
+    <img src="http://www.qgmindpolice.com/comics/2009-05-29-ComputerSketch.png" />
+    <div class="demon">
+        ಠ益ಠ
+    </div>
+    <div class="caption">
+        I will destroy you(r algorithm).
+    </div>
 
-That's crazy! But yes.
+</div>
+-->
 
-Let's start with i pointing to the middle index of the array:
-=========graphic=============
-needle:
-20
+</div>
 
-haystack:
-[3, 5, 10, 35, 71, 100]
-            ^
-            i
-I have no idea what I am doing
-=============================
+<div class="jumbotron">
 
-Check it out: we're looking at 35, and our needle is 20. We don't know if 20 is in the set or not, but we know that everything to the right of i is greater than 35, which means it's also greater than 20, which means if 20 IS in the set, it's definitely to the left.
+<p>
+    If we start from the end and work backwards, we're still screwed if everything in the haystack is <em>greater than</em> the needle.
+</p>
 
-And just like that, we chopped off HALF of our haystack. We don't ever have to look at it. It's dead to us. Please, just don't even bring it up.
+    <div class="illustration">
+        <label for="fig1-needle">Needle:</label>
+        <div id="fig1--needle" class="box">372</div>
+        <label for="fig1-haystack">Haystack:</label>
+        <table class="array" id="fig1-haystack">
+            <tr>
+                <td class="current">
+                    <span class="index">
+                        1
+                    </span>
+                    380
+                </td>
+                <td class="visited eliminated">
+                    <span class="index">
+                        2
+                    </span>
+                    395
+                </td>
+                <td class="visited eliminated">
+                    <span class="index">
+                        3
+                    </span>
+                    410
+                </td>
+                <td class="visited eliminated">
+                    <span class="index">
+                        4
+                    </span>
+                    415
+                </td>
+                <td class="visited eliminated">
+                    <span class="index">
+                        5
+                    </span>
+                    419
+                </td>
+                <td class="snip">
+                </td>
+            </tr>
+        </table>
+        <div class="caption">
+            Well, poop.
+        </div>
+    </div>
 
-=========graphic=============
-needle:
-20
+</div>
 
-haystack:
-[3, 5, 10, 35, X, X, X] 
-            ^
-            i
-Sayonara, suckers!
-=============================
+<div class="jumbotron">
 
-And if the item at i had been LESS THAN 20, the converse would hold--if 20 is in the set, it's certainly to the right of i. The left side of the set is dead to us.
+    <p>
+        What if we start in the middle?
+    </p>
 
-HERE'S WHERE IT GETS CRAZY
+    <div class="illustration">
+        <label for="fig1-needle">Needle:</label>
+        <div id="fig1--needle" class="box">372</div>
+        <label for="fig1-haystack">Haystack:</label>
+        <table class="array" id="fig1-haystack">
+            <tr>
+                <td class="snip">
+                </td>
+                <td class="">
+                    <span class="index">
+                        498
+                    </span>
+                    532
+                </td>
+                <td class="">
+                    <span class="index">
+                        499
+                    </span>
+                    544
+                </td>
+                <td class="current">
+                    <span class="index">
+                        500
+                    </span>
+                    549
+                </td>
+                <td class="">
+                    <span class="index">
+                        501
+                    </span>
+                    560
+                </td>
+                <td class="">
+                    <span class="index">
+                        502
+                    </span>
+                    580
+                </td>
+                <td class="snip">
+                </td>
+            </tr>
+        </table>
+        <div class="caption">
+            I have no idea what I am doing.
+        </div>
+    </div>
+</div>
 
-Now that we've dumped half of our set, we're left with a /subproblem/ that is actually /the same/ as our initial problem, only smaller. SO LET'S USE THE SAME EXACT APPROACH AGAIN.
+<div class="jumbotron">
 
-=========graphic=============
-needle:
-20
+    <p>
+        Once we see what's in the middle index, we know that our answer is either to the left or the right.
+    </p>
 
-haystack:
-[3, 5, 7, 10, 35, X, X, X, X] 
-       ^     
-       i    
-Again! Again!
-=============================
+    <p class="smaller">
+        If the item is smaller than the needle, our needle is to the right. If the item is larger than the needle, our needle is to the left.
+    </p>
 
-Now i is pointing to a 7, so we know 20 is to the right, if it's there at all.
+    <div class="illustration">
+        <label for="fig1-needle">Needle:</label>
+        <div id="fig1--needle" class="box">372</div>
+        <label for="fig1-haystack">Haystack:</label>
+        <table class="array" id="fig1-haystack">
+            <tr>
+                <td class="snip">
+                </td>
+                <td class="">
+                    <span class="index">
+                        498
+                    </span>
+                    532
+                </td>
+                <td class="">
+                    <span class="index">
+                        499
+                    </span>
+                    544
+                </td>
+                <td class="current">
+                    <span class="index">
+                        500
+                    </span>
+                    549
+                </td>
+                <td class="eliminated">
+                    <span class="index">
+                        501
+                    </span>
+                    560
+                </td>
+                <td class="eliminated">
+                    <span class="index">
+                        502
+                    </span>
+                    580
+                </td>
+                <td class="snip eliminated">
+                </td>
+            </tr>
+        </table>
+        <div class="caption">
+            BAM! Ruled out <em>half</em> the haystack!
+        </div>
+    </div>
+</div>
 
-=========graphic=============
-needle:
-20
+<div class="jumbotron">
+    <p>
+        Suddenly the problem is half the size. Nice.
+    </p>
 
-haystack:
-[X, X, X, 10, X, X, X, X, X] 
-       ^     
-       i    
-=============================
+    <div class="illustration">
+        <label for="fig1-needle">Needle:</label>
+        <div id="fig1--needle" class="box">372</div>
+        <label for="fig1-haystack">Haystack:</label>
+        <table class="array" id="fig1-haystack">
+            <tr>
+                <td class="">
+                    <span class="index">
+                        1
+                    </span>
+                    3
+                </td>
+                <td class="">
+                    <span class="index">
+                        2
+                    </span>
+                    5
+                </td>
+                <td class="snip">
+                </td>
+                <td class="">
+                    <span class="index">
+                        499
+                    </span>
+                    544
+                </td>
+                <td class="">
+                    <span class="index">
+                        500
+                    </span>
+                    549
+                </td>
+            </tr>
+        </table>
+        <div class="caption">
+            I can work with this.
+        </div>
+    </div>
+</div>
 
-BINGO! Well, we didn't find our needle. But we can confidently say that it is not in the haystack. And we only had to check 3 slots.
+<div class="jumbotron">
+    <p>
+        Here's where shit gets <em>awesome</em>: notice that the resulting problem is fundamentally the same as the initial problem, just with a smaller array. <strong>So we can chop that thing in half again</strong>.
+    </p>
+
+    <div class="illustration">
+        <label for="fig1-needle">Needle:</label>
+        <div id="fig1--needle" class="box">372</div>
+        <label for="fig1-haystack">Haystack:</label>
+        <table class="array" id="fig1-haystack">
+            <tr>
+                <td class="snip eliminated">
+                </td>
+                <td class="eliminated">
+                    <span class="index">
+                        249
+                    </span>
+                    224
+                </td>
+                <td class="current">
+                    <span class="index">
+                        250
+                    </span>
+                    225
+                </td>
+                <td class="">
+                    <span class="index">
+                        251
+                    </span>
+                    228
+                </td>
+                <td class="snip">
+                </td>
+            </tr>
+        </table>
+        <div class="caption">
+            Crossing things off left and right. Crushing it.
+        </div>
+    </div>
+</div>
+
+
+
+<div class="jumbotron">
+    <p>
+        This practice of iteratively breaking down the problem into smaller subproblems is called <span class="vocab">Divide and Conquer</span>. It's <em>awesome</em>, because it means that if you can figure out how to break a problem into smaller subproblems, you've pretty much figured out how to solve it.
+    </p>
+
+</div>
+
+<div class="jumbotron">
+    <p>
+        Eventually, we'll get down to one element. If that's not our needle, we know the needle is not in the haystack.
+    </p>
+    <div class="illustration">
+        <label for="fig1-needle">Needle:</label>
+        <div id="fig1--needle" class="box">372</div>
+        <label for="fig1-haystack">Haystack:</label>
+        <table class="array" id="fig1-haystack">
+            <tr>
+                <td class="snip eliminated">
+                </td>
+                <td class="eliminated">
+                    <span class="index">
+                        333
+                    </span>
+                    371
+                </td>
+                <td class="current">
+                    <span class="index">
+                        334
+                    </span>
+                    373
+                </td>
+                <td class="eliminated">
+                    <span class="index">
+                        335
+                    </span>
+                    374
+                </td>
+                <td class="snip eliminated">
+                </td>
+            </tr>
+        </table>
+        <div class="caption">
+            OK that was way faster
+        </div>
+    </div>
+</div>
+
+<div class="jumbotron">
+    <p>
+        What's the max number of elements we have to check with this algorithm? Let's just count the number of times we have to slice 1,000 in half before we get to 1.
+    </p>
+    <div class="illustration">
+        <table>
+            <tr>
+                <td>slices</td>
+                <td>size</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>1,000</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>500</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>250</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>125</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>63</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>32</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>16</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>1</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+
+<div class="jumbotron">
+    <p>
+        So there you have it. Binary search uses divide and conquer to let you find an element in a sorted array in lg(n) guesses.
+    </p>
+</div>
+
+
+<!--
+<div class="jumbotron">
+    <p>
+        Well, it's the same as the number of times we need to chop 1,000 in half before we get down to 1.
+    </p>
+
+    <p>
+        If we look at this in reverse order, it's the same as the number of times we need to multiply 1 by 2 before we get back up to 1,000.
+    </p>
+</div>
+
+<div class="jumbotron">
+    <div class="math">
+        1 x 2 x 2 x 2 .....
+        <br />
+        2 x 2 x 2 x 2 ....
+        <br />
+        2^x
+    </div>
+    So, 2^x = 1000. Solve for x.
+</div>
+
+-->
+
+<!--
+<div class="jumbotron">
+</div>
 
 This approach is clearly more efficient. But how much more efficient?
 
@@ -344,9 +870,87 @@ So, the question is: how many times must we multiply 1 by 2 in order to get n? O
 
 
 
+-->
 
 
+
+<!--
 graveyard::::::::::::::::::::::::::::::::::
+WRONG!
+
+"Oh, so you mean like we should start from the end?"
+
+NO! If you start from the end, then your algorithm is /still/ O(n) if the needle is at the /beginning/ of the haystack.
+
+"Ok so what like you start in the middle?"
+
+That's crazy! But yes.
+
+Let's start with i pointing to the middle index of the array:
+=========graphic=============
+needle:
+20
+
+haystack:
+[3, 5, 10, 35, 71, 100]
+            ^
+            i
+I have no idea what I am doing
+=============================
+
+Check it out: we're looking at 35, and our needle is 20. We don't know if 20 is in the set or not, but we know that everything to the right of i is greater than 35, which means it's also greater than 20, which means if 20 IS in the set, it's definitely to the left.
+
+And just like that, we chopped off HALF of our haystack. We don't ever have to look at it. It's dead to us. Please, just don't even bring it up.
+
+=========graphic=============
+needle:
+20
+
+haystack:
+[3, 5, 10, 35, X, X, X] 
+            ^
+            i
+Sayonara, suckers!
+=============================
+
+And if the item at i had been LESS THAN 20, the converse would hold--if 20 is in the set, it's certainly to the right of i. The left side of the set is dead to us.
+
+HERE'S WHERE IT GETS CRAZY
+
+Now that we've dumped half of our set, we're left with a /subproblem/ that is actually /the same/ as our initial problem, only smaller. SO LET'S USE THE SAME EXACT APPROACH AGAIN.
+
+=========graphic=============
+needle:
+20
+
+haystack:
+[3, 5, 7, 10, 35, X, X, X, X] 
+       ^     
+       i    
+Again! Again!
+=============================
+
+Now i is pointing to a 7, so we know 20 is to the right, if it's there at all.
+
+=========graphic=============
+needle:
+20
+
+haystack:
+[X, X, X, 10, X, X, X, X, X] 
+       ^     
+       i    
+=============================
+
+BINGO! Well, we didn't find our needle. But we can confidently say that it is not in the haystack. And we only had to check 3 slots.
+
+
+
+
+
+
+
+
 
 Well, each time we're dividing our set of n elements in half, until we get to 1 element. So, how many times must we divide n in half to get to 1? In other words, n * (.5)^x = 1
 
@@ -363,3 +967,4 @@ x = 2/n
 2/n = lgn
 
 </body>
+-->

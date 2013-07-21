@@ -2,6 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
 .jumbotron{
     background-color: #f7f7f7;
     border-bottom: 1px solid #eee;
@@ -16,6 +17,9 @@
     p{
         font-size: 30px;
         color: #555;
+        &.smaller{
+            font-size: .8em;
+        }
     }
 
 
@@ -25,6 +29,7 @@
         right: 10px;
         color: #696969;
         font-size: 15px;
+        text-align: right;
     }
 
     .vocab{
@@ -39,6 +44,10 @@
     }
 
     .illustration{
+        $illustrationColorBase: #707070;
+        $illustrationColorLight: #dcdcdc;
+
+        color: $illustrationColorBase;
         text-align: left;
         padding: 20px 80px;
         label{
@@ -48,6 +57,11 @@
             padding: 0;
         }
 
+        .demon{
+            font-size: 100px;
+            color: red;
+        }
+
         .caption{
             font-style: italic;
             padding: 5px 20px;
@@ -55,30 +69,101 @@
             background-color: #f5f5f5;
         }
 
-        table{
-            margin: 0;
-            &.array tr{
-                padding: 0;
-                margin: 0;
-                td .index{
-                    position: absolute;
-                    top: 0px;
-                    left: 0px;
-                    font-size: 10px;
-                    line-height: 10px;
-                }
-            }
-        }
+        $tableCellSize: 50px;
+
 
         table.array tr td, .box{
-            border: 1px solid #dcdcdc;
-            width: 50px;
-            height: 50px;
+            border: 1px solid $illustrationColorLight;
+            width: $tableCellSize;
+            height: $tableCellSize;
             margin: 0;
             padding: 0;
             position: relative;
             text-align: center;
         }
+
+        table{
+            margin: 0;
+            &.array tr{
+                padding: 0;
+                margin: 0;
+                td {
+                    position: relative;
+                    &.snip{
+                        border: 1px dashed #c2c2c2;
+                        width: 1.5 * $tableCellSize;
+                        &:before{
+                            content: "\00B7  \00B7  \00B7"
+                        }
+                    }
+                    &.visited{
+                        &:before{
+                            //content: "\00D7";
+                            content: "\00B7";
+                            position: absolute;
+                            bottom: - $tableCellSize + 10px;
+                            left: 0px;
+                            color: $illustrationColorBase;
+                            font-size: $tableCellSize - 20px;
+                            line-height: $tableCellSize;
+                            font-weight: 100;
+                            text-align: center;
+                            width: $tableCellSize;
+                            margin: auto;
+                            padding: 0;
+                        }
+                    }
+                    &.current{
+                        &:before{
+                            //content: "\00D7";
+                            content: "\2038";
+                            position: absolute;
+                            bottom: - 20px;
+                            left: 0px;
+                            color: $illustrationColorBase;
+                            font-size: $tableCellSize - 8px;
+                            line-height: $tableCellSize;
+                            font-weight: 100;
+                            text-align: center;
+                            width: $tableCellSize;
+                            margin: auto;
+                            padding: 0;
+                        }
+                    }
+                    &.eliminated{
+                        &:after{
+                            //content: "\00D7";
+                            content: "X";
+                            position: absolute;
+                            color: #FA8072;
+                            font-size: $tableCellSize;
+                            line-height: $tableCellSize;
+                            left: 0px;
+                            top: 0px;
+                            font-weight: 100;
+                            text-align: center;
+                            width: 100%;
+                        }
+                    }
+                    .note{
+                        position: absolute;
+                        //height: $tableCellSize*2;
+                        //bottom: -$tableCellSize;
+                        margin-bottom: $tableCellSize;
+                        padding-top: 10px;
+                        text-align: center;
+                    }
+                    .index{
+                        position: absolute;
+                        top: 0px;
+                        left: 0px;
+                        font-size: 10px;
+                        line-height: 10px;
+                    }
+                }
+            }
+        }
+
 
     }
 
